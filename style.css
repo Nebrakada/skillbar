@@ -19,7 +19,7 @@
   height: 100vh;
 }
 
-.wrapper > h2 {
+.wrapper>h2 {
   margin-bottom: 1rem;
 }
 
@@ -28,6 +28,7 @@
   width: 520px;
   background-color: lightslategray;
 
+  text-align: center;
   display: grid;
   align-items: center;
   justify-content: center;
@@ -51,28 +52,9 @@
   cursor: pointer;
 
 }
+
 .skill-bar>*:hover {
   opacity: 1;
-}
-
-.slot-1 {
-  background-image: url('./images/SpellBook01_13.png');
-}
-
-.slot-2 {
-  background-image: url('./images/SpellBook01_17.png');
-}
-
-.slot-3 {
-  background-image: url('./images/SpellBook01_78.png');
-}
-
-.slot-4 {
-  background-image: url('./images/SpellBook01_87.png');
-}
-
-.slot-5 {
-  background-image: url('./images/SpellBook01_95.png');
 }
 
 .on-cooldown {
@@ -89,7 +71,18 @@
   0% {
     transform: translateY(0)
   }
-  100%{
+
+  100% {
     transform: translateY(100%)
   }
+}
+
+.cooldown-counter {
+  font-size: 4rem;
+  color: white;
+}
+
+.combat-log {
+  font-size: 1.5rem;
+  margin-top: 2rem;
 }
