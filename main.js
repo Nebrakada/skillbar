@@ -39,12 +39,13 @@ const printSkillUse = (skill) => {
 
 function skillClicked(e) {
   const skill = e.target;
-  const createdCoolDownDiv = addCooldownEffect(skill);
   const usedSkill = skills[skill.dataset.index];
   printSkillUse(usedSkill);
   const cooldown = usedSkill.cooldown;
-  console.log("cd: ", cooldown);
-  const cooldownCounter = createdCoolDownDiv.parentElement.querySelector(".cooldown-counter");
+  const createdCoolDownDiv = addCooldownEffect(skill, cooldown);
+  const cooldownCounter = createdCoolDownDiv.parentElement.querySelector(
+    ".cooldown-counter"
+  );
   removeCooldownEffect(createdCoolDownDiv, cooldownCounter, cooldown);
 }
 
@@ -54,9 +55,9 @@ skillBarElems.forEach((skill, indx) => {
 });
 
 /* CoolDown */
-function addCooldownEffect(element) {
+function addCooldownEffect(element, cooldown) {
   const div = document.createElement("div");
-  div.classList.add("on-cooldown");
+  addCoolDownOverlay(div, cooldown);
   element.append(div);
   return div;
 }
@@ -64,8 +65,8 @@ function addCooldownEffect(element) {
 const removeCooldownEffect = async (element, cooldownCounter, cooldownTime) => {
   let timer = cooldownTime;
   for (let i = 0; i < cooldownTime; i++) {
-    printCoolDown(cooldownCounter, timer);
     timer--;
+    printCoolDown(cooldownCounter, timer+1);
     await sleep(1000);
   }
   cooldownCounter.textContent = "";
@@ -73,10 +74,19 @@ const removeCooldownEffect = async (element, cooldownCounter, cooldownTime) => {
 };
 
 function printCoolDown(cooldownCounter, timeLeft) {
-  console.log(`time left: ${timeLeft}`);
   cooldownCounter.textContent = timeLeft;
 }
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
+
+function addCoolDownOverlay(element, coolDownTime) {
+  element.style.position = "absolute";
+  element.style.top = "0";
+  element.style.left = "0";
+  element.style.width = "100%";
+  element.style.height = "100%";
+  element.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+  element.style.animation = `coolDownAnimation ${coolDownTime}s linear`;
+}
